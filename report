@@ -1,0 +1,15 @@
+ #!/bin/sh
+
+LC_NUMERIC="en_US"
+electricity=$(cat "$1")
+water=$(cat "$2")
+telephone=107
+rent=6000
+total=$(echo "$electricity + $water + $telephone + $rent" | tr -d ',' | bc | xargs printf "%'.2f")
+
+echo "****************************"
+echo ขอแจ้งบิลรอบ $(date +%d/%m/%y)
+echo
+echo ไฟฟ้า+น้ำ+โทร+บ้าน=${electricity}+${water}+${telephone}+${rent}=${total}บาท
+echo
+echo โอนเสร็จโปรดแจ้งกลับด้วย ขอบคุณครับ
