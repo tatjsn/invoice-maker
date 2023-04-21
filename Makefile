@@ -24,3 +24,6 @@ water.crop.png: water.flat.png
 
 all: electric.amount.txt water.amount.txt
 	./report $^
+
+clean:
+	rm electric.* water.*
