@@ -1,11 +1,11 @@
 ENDPOINT = "https://gmail.googleapis.com/gmail/v1/users/me/messages"
-HEADER = $(shell oauth2l header --credentials credential.json --scope gmail.readonly)
+HEADER = $(shell oauth2l header --credentials credential.json --scope gmail.readonly --refresh)
 
 electric.message-list.json:
-	curl --get -H "$(HEADER)" --data-urlencode "q=from:ebill@mea.or.th ใบแจ้ง" "$(ENDPOINT)" -o $@
+	curl --get -H "$(HEADER)" --data-urlencode "q=from:ebill@mea.or.th newer_than:30d ใบแจ้ง" "$(ENDPOINT)" -o $@
 
 water.message-list.json:
-	curl --get -H "$(HEADER)" --data-urlencode "q=from:mwatax@mwa.co.th ใบแจ้ง" "$(ENDPOINT)" -o $@
+	curl --get -H "$(HEADER)" --data-urlencode "q=from:mwatax@mwa.co.th newer_than:30d ใบแจ้ง" "$(ENDPOINT)" -o $@
 
 %.message.json: %.message-list.json
 	curl --get -H "$(HEADER)" "$(ENDPOINT)/$(shell jq -r .messages[0].id $<)" -o $@
@@ -16,7 +16,6 @@ water.message-list.json:
 
 %.pdf: %.attachment.json
 	jq -r .data $< | base64 --decode -o $@
-
 
 %.raw.png: %.pdf
 	convert -density 300 $<[0] $@
