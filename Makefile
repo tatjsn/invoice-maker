@@ -1,17 +1,18 @@
+ENDPOINT = "https://gmail.googleapis.com/gmail/v1/users/me/messages"
 HEADER = $(shell oauth2l header --credentials credential.json --scope gmail.readonly)
 
 electric.message-list.json:
-	curl --get -H "$(HEADER)" --data-urlencode "q=from:ebill@mea.or.th ใบแจ้ง" "https://gmail.googleapis.com/gmail/v1/users/me/messages" -o $@
+	curl --get -H "$(HEADER)" --data-urlencode "q=from:ebill@mea.or.th ใบแจ้ง" "$(ENDPOINT)" -o $@
 
 water.message-list.json:
-	curl --get -H "$(HEADER)" --data-urlencode "q=from:mwatax@mwa.co.th ใบแจ้ง" "https://gmail.googleapis.com/gmail/v1/users/me/messages" -o $@
+	curl --get -H "$(HEADER)" --data-urlencode "q=from:mwatax@mwa.co.th ใบแจ้ง" "$(ENDPOINT)" -o $@
 
 %.message.json: %.message-list.json
-	curl --get -H "$(HEADER)" "https://gmail.googleapis.com/gmail/v1/users/me/messages/$$(jq -r .messages[0].id $<)" -o $@
+	curl --get -H "$(HEADER)" "$(ENDPOINT)/$(shell jq -r .messages[0].id $<)" -o $@
 
 %.attachment.json: %.message.json %.message-list.json
 	$(eval ATTACHMENT := $(shell gron $< | grep attachment | fgrep '.pdf' | perl -pe 's/^json(\.payload\.parts\[\d\].*?)\.headers.*/$$1/'| xargs -I '{}' jq -r {}.body.attachmentId $<))
-	curl --get -H "$(HEADER)" "https://gmail.googleapis.com/gmail/v1/users/me/messages/$$(jq -r .messages[0].id $(word 2,$^))/attachments/$(ATTACHMENT)" -o $@
+	curl --get -H "$(HEADER)" "$(ENDPOINT)/$(shell jq -r .messages[0].id $(word 2,$^))/attachments/$(ATTACHMENT)" -o $@
 
 %.pdf: %.attachment.json
 	jq -r .data $< | base64 --decode -o $@
