@@ -1,8 +1,21 @@
-electric.pdf:
-	cp $$(ls -t ~/Downloads/ELE_*.pdf | head -1) $@
+HEADER = $(shell oauth2l header --credentials credential.json --scope gmail.readonly)
 
-water.pdf:
-	cp $$(ls -t ~/Downloads/W*.pdf | head -1) $@
+electric.message-list.json:
+	curl --get -H "$(HEADER)" --data-urlencode "q=from:ebill@mea.or.th ใบแจ้ง" "https://gmail.googleapis.com/gmail/v1/users/me/messages" -o $@
+
+water.message-list.json:
+	curl --get -H "$(HEADER)" --data-urlencode "q=from:mwatax@mwa.co.th ใบแจ้ง" "https://gmail.googleapis.com/gmail/v1/users/me/messages" -o $@
+
+%.message.json: %.message-list.json
+	curl --get -H "$(HEADER)" "https://gmail.googleapis.com/gmail/v1/users/me/messages/$$(jq -r .messages[0].id $<)" -o $@
+
+%.attachment.json: %.message.json %.message-list.json
+	$(eval ATTACHMENT := $(shell gron $< | grep attachment | fgrep '.pdf' | perl -pe 's/^json(\.payload\.parts\[\d\].*?)\.headers.*/$$1/'| xargs -I '{}' jq -r {}.body.attachmentId $<))
+	curl --get -H "$(HEADER)" "https://gmail.googleapis.com/gmail/v1/users/me/messages/$$(jq -r .messages[0].id $(word 2,$^))/attachments/$(ATTACHMENT)" -o $@
+
+%.pdf: %.attachment.json
+	jq -r .data $< | base64 --decode -o $@
+
 
 %.raw.png: %.pdf
 	convert -density 300 $<[0] $@
