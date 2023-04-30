@@ -10,10 +10,10 @@ attachment_id = $(shell gron $(1) | \
 	xargs -I '{}' jq -r {}.body.attachmentId $(1))
 
 electric.message-list.json:
-	$(CURL) --data-urlencode "q=from:ebill@mea.or.th newer_than:30d ใบแจ้ง" "$(ENDPOINT)" -o $@
+	$(CURL) --data-urlencode "q=from:ebill@mea.or.th newer_than:30d subject:ใบแจ้ง" "$(ENDPOINT)" -o $@
 
 water.message-list.json:
-	$(CURL) --data-urlencode "q=from:mwatax@mwa.co.th newer_than:30d ใบแจ้ง" "$(ENDPOINT)" -o $@
+	$(CURL) --data-urlencode "q=from:mwatax@mwa.co.th newer_than:30d subject:ใบแจ้ง" "$(ENDPOINT)" -o $@
 
 %.message.json: %.message-list.json
 	$(CURL) "$(ENDPOINT)/$(call message_id,$<)" -o $@
