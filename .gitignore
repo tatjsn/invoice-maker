@@ -4,3 +4,4 @@ credential.json
 firebase-adminsdk.json
 line.json
 .venv
+__pycache__
