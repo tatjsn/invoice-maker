@@ -14,7 +14,7 @@ def report(electricity_string, water_string):
     water = to_decimal(water_string)
 
     # Workaround if the decimal wasn't recognisable
-    if water > 1000:
+    if water > 10000:
         water /= 100
 
     telephone = 107
