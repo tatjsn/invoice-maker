@@ -1,3 +1,6 @@
 electric.*
 water.*
 credential.json
+firebase-adminsdk.json
+line.json
+.venv

@@ -1,5 +1,5 @@
 ENDPOINT := "https://gmail.googleapis.com/gmail/v1/users/me/messages"
-HEADER := $(shell oauth2l header --credentials credential.json --scope gmail.readonly --refresh)
+HEADER := $(shell oauth2l header --credentials credential.json --scope gmail.readonly)
 CURL := curl --get -s -H "$(HEADER)"
 
 message_id = $(shell jq -r .messages[0].id $(1))
@@ -42,8 +42,8 @@ water.crop.png: water.flat.png
 %.amount.txt: %.ocr.txt
 	cat $< | perl -pe 's/.*?([0-9,.]+).*/$$1/' > $@
 
-all: electric.amount.txt water.amount.txt
-	./report $^
+all: electric.amount.txt water.amount.txt electric.flat.png water.flat.png
+	python report.py $^
 
 clean:
 	rm electric.* water.*
