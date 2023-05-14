@@ -15,6 +15,5 @@
 
 ```sh
 sh prepare.sh
-make clean
 make all
 ```

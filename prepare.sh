@@ -7,4 +7,6 @@ fi
 
 oauth2l header --credentials credential.json --scope gmail.readonly
 
+make clean
+
 echo "Ready!"
