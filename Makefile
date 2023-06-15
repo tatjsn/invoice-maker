@@ -46,4 +46,4 @@ all: electric.amount.txt water.amount.txt electric.flat.png water.flat.png
 	python report.py $^
 
 clean:
-	rm electric.* water.*
+	rm -f electric.* water.*
