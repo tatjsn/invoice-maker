@@ -2,7 +2,8 @@ if [ -n "$VIRTUAL_ENV" ]; then
     echo "You're running a Python virtual environment!"
 else
     echo "You're not running a Python virtual environment."
-    source .venv/bin/activate
+    echo source .venv/bin/activate
+    exit 1
 fi
 
 oauth2l header --credentials credential.json --scope gmail.readonly
