@@ -22,7 +22,7 @@ water.message-list.json:
 	$(CURL) "$(ENDPOINT)/$(call message_id,$(word 2,$^))/attachments/$(call attachment_id,$<)" -o $@
 
 %.pdf: %.attachment.json
-	jq -r .data $< | base64 --decode -o $@
+	python attachment.py $< $@
 
 %.raw.png: %.pdf
 	convert -density 300 $<[0] $@
