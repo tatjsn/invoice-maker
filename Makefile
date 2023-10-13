@@ -35,7 +35,7 @@ electric.crop.png: electric.flat.png
 	convert $< -crop 830x90+160+1300 $@
 
 water.crop.png: water.flat.png
-	convert $< -crop 150x60+900+735 $@
+	convert $< -crop 260x40+805+862 $@
 
 %.ocr.txt: %.crop.png
 	tesseract -l tha+eng --psm 7 $< stdout > $@
