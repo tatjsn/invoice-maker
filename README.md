@@ -9,6 +9,15 @@
 - gron
 - python
 
+## How to setup
+
+```sh
+python -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
 ## How to use
 
 1. Put `credential.json` to the working directory.
