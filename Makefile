@@ -32,7 +32,7 @@ water.message-list.json:
 	convert $< -background white -flatten -alpha off $@
 
 electric.crop.png: electric.flat.png
-	convert $< -crop 830x90+160+1300 $@
+	convert $< -crop 287x70+2190+860 $@
 
 water.crop.png: water.flat.png
 	convert $< -crop 260x40+805+862 $@
@@ -41,7 +41,7 @@ water.crop.png: water.flat.png
 	tesseract -l tha+eng --psm 7 $< stdout > $@
 
 %.amount.txt: %.ocr.txt
-	cat $< | perl -pe 's/.*?([0-9,.]+).*/$$1/' > $@
+	cat $< | perl -pe 's/.*?([0-9,. ]+).*/$$1/' > $@
 
 all: electric.amount.txt water.amount.txt electric.flat.png water.flat.png
 	$(PYTHON) report.py $^

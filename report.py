@@ -7,7 +7,7 @@ from linebot.models import TextSendMessage, ImageSendMessage
 import upload
 
 def to_decimal(scanned_number):
-    return Decimal(scanned_number.strip().replace(',', ''))
+    return Decimal(scanned_number.strip().replace(',', '').replace(' ', ''))
 
 def report(electricity_string, water_string):
     electricity = to_decimal(electricity_string)
