@@ -32,7 +32,7 @@ water.message-list.json:
 	convert $< -background white -flatten -alpha off $@
 
 electric.crop.png: electric.flat.png
-	convert $< -crop 287x70+2190+860 $@
+	convert $< -crop 287x70+2190+809 $@
 
 water.crop.png: water.flat.png
 	convert $< -crop 260x40+805+862 $@
