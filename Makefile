@@ -32,7 +32,7 @@ water.message-list.json:
 	convert $< -background white -flatten -alpha off $@
 
 electric.crop.png: electric.flat.png
-	convert $< -crop 287x70+2240+761 $@
+	convert $< -crop $(shell python offset-e.py) $@
 
 water.crop.png: water.flat.png
 	convert $< -crop 260x40+805+862 $@
