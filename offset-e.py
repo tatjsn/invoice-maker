@@ -16,6 +16,7 @@ loc = np.where(result == np.max(result))
 pos = list(zip(*loc[::-1]))[0]
 
 print("{}x{}+{}+{}".format(
-    280, 70,
-    pos[0] + 351,
-    pos[1] + 260), end='')
+    280, 70, # width x height
+    pos[0] + 351, # horizontal offset
+    pos[1] + 260 # vertical offset
+), end='')
