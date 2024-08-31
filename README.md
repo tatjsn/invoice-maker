@@ -27,7 +27,7 @@ pip install -r requirements.txt
 
 ## How to use
 
-1. Put `credential.json` to the working directory.
+1. Put credentials to the working directory.
 2. Run the following command:
 
 ```sh
