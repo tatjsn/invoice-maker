@@ -1,7 +1,6 @@
 ENDPOINT := "https://gmail.googleapis.com/gmail/v1/users/me/messages"
 HEADER := $(shell oauth2l header --credentials credential.json --scope gmail.readonly)
 CURL := curl --get -s -H "$(HEADER)"
-PYTHON := python3
 
 message_id = $(shell jq -r .messages[0].id $(1))
 attachment_id = $(shell gron $(1) | \
@@ -23,7 +22,7 @@ water.message-list.json:
 	$(CURL) "$(ENDPOINT)/$(call message_id,$(word 2,$^))/attachments/$(call attachment_id,$<)" -o $@
 
 %.pdf: %.attachment.json
-	$(PYTHON) attachment.py $< $@
+	python attachment.py $< $@
 
 %.raw.png: %.pdf
 	convert -density 300 $<[0] $@
@@ -31,20 +30,11 @@ water.message-list.json:
 %.flat.png: %.raw.png
 	convert $< -background white -flatten -alpha off $@
 
-electric.crop.png: electric.flat.png
-	convert $< -crop $(shell python offset-e.py) $@
-
-water.crop.png: water.flat.png
-	convert $< -crop 260x40+805+862 $@
-
-%.ocr.txt: %.crop.png
-	tesseract -l tha+eng --psm 7 $< stdout > $@
-
-%.amount.txt: %.ocr.txt
-	cat $< | perl -pe 's/.*?([0-9,. ]+).*/$$1/' > $@
+%.amount.txt: %.flat.png
+	python amount.py $< $@
 
 all: electric.amount.txt water.amount.txt electric.flat.png water.flat.png
-	$(PYTHON) report.py $^
+	python report.py $^
 
 clean:
 	rm -f electric.* water.*

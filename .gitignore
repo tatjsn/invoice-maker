@@ -3,5 +3,6 @@ water.*
 credential.json
 firebase-adminsdk.json
 line.json
+gemini.json
 .venv
 __pycache__

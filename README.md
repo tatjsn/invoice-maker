@@ -3,7 +3,6 @@
 ## Requirements
 
 - ImageMagick
-- Tesseract
 - oauth2l
 - jq
 - gron
@@ -17,6 +16,14 @@ source .venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
+
+## Credentials
+
+- `credential.json`: Google API
+- `firebase-adminsdk.json`: Firebase Admin SDK
+- `line.json`: LINE `token` and `userId`
+- `gemini.json`: Gemini `apiKey`
+
 
 ## How to use
 
