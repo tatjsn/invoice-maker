@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- ImageMagick
+- poppler
 - oauth2l
 - jq
 - gron

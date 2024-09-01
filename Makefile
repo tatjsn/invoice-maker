@@ -24,13 +24,10 @@ water.message-list.json:
 %.pdf: %.attachment.json
 	python attachment.py $< $@
 
-%.raw.png: %.pdf
-	convert -density 300 $<[0] $@
+%.png: %.pdf
+	pdftoppm -png -singlefile $< $(basename $@)
 
-%.flat.png: %.raw.png
-	convert $< -background white -flatten -alpha off $@
-
-%.amount.txt: %.flat.png
+%.amount.txt: %.png
 	python amount.py $< $@
 
 all: electric.amount.txt water.amount.txt electric.flat.png water.flat.png
