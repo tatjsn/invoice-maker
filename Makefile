@@ -30,7 +30,7 @@ water.message-list.json:
 %.amount.txt: %.png
 	python amount.py $< $@
 
-all: electric.amount.txt water.amount.txt electric.flat.png water.flat.png
+all: electric.amount.txt water.amount.txt electric.png water.png
 	python report.py $^
 
 clean:
