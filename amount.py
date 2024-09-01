@@ -6,8 +6,8 @@ import re
 
 def extract_amount(filename):
     model = genai.GenerativeModel("gemini-1.5-flash")
-    organ = PIL.Image.open(filename)
-    response = model.generate_content(["What is the total amount of this invoice?", organ])
+    image = PIL.Image.open(filename)
+    response = model.generate_content(["What is the total amount of this invoice?", image])
     return re.search(r"[\d,]+\.\d+", response.text).group()
 
 if __name__ == '__main__':
