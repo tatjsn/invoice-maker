@@ -6,7 +6,7 @@ else
     exit 1
 fi
 
-oauth2l fetch --credentials credential.json --scope gmail.readonly --refresh
+oauth2l fetch --credentials credential.json --scope gmail.readonly
 
 make clean
 
