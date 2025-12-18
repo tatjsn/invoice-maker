@@ -4,5 +4,6 @@ credential.json
 firebase-adminsdk.json
 line.json
 gemini.json
+token.txt
 .venv
 __pycache__

@@ -2,13 +2,13 @@
 
 ## Requirements
 
-- poppler
 - oauth2l
 - python
+- pdftoppm
 
 ## How to setup
 
-```sh
+```bash
 python -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
@@ -22,13 +22,11 @@ pip install -r requirements.txt
 - `line.json`: LINE `token` and `userId`
 - `gemini.json`: Gemini `apiKey`
 
-
 ## How to use
 
 1. Put credentials to the working directory.
 2. Run the following command:
 
-```sh
-sh prepare.sh
-make all
+```bash
+./deploy
 ```

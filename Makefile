@@ -1,10 +1,11 @@
-TOKEN := $(shell oauth2l fetch --credentials credential.json --scope gmail.readonly --refresh)
+token.txt:
+	oauth2l fetch --credentials credential.json --scope gmail.readonly --refresh | tail -n 1 > $@
 
-electric.pdf:
-	python attachment.py $(TOKEN) "from:ebill@mea.or.th newer_than:30d subject:ใบแจ้ง" $@
+electric.pdf: token.txt
+	python attachment.py $(shell cat $<) "from:ebill@mea.or.th newer_than:30d subject:ใบแจ้ง" $@
 
-water.pdf:
-	python attachment.py $(TOKEN) "from:no-reply@mwa.co.th newer_than:30d subject:ใบแจ้ง" $@
+water.pdf: token.txt
+	python attachment.py $(shell cat $<) "from:no-reply@mwa.co.th newer_than:30d subject:ใบแจ้ง" $@
 
 %.png: %.pdf
 	pdftoppm -png -singlefile $< $(basename $@)
@@ -16,4 +17,4 @@ all: electric.amount.txt water.amount.txt electric.png water.png
 	python report.py $^
 
 clean:
-	rm -f electric.* water.*
+	rm -f electric.* water.* token.txt

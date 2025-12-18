@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+source .venv/bin/activate
+
+make clean
+make water.pdf
