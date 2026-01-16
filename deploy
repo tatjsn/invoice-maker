@@ -3,4 +3,4 @@
 source .venv/bin/activate
 
 make clean
-make water.pdf
+make all
