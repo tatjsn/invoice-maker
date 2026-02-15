@@ -1,5 +1,5 @@
 token.txt:
-	oauth2l fetch --credentials credential.json --scope gmail.readonly --refresh | tail -n 1 > $@
+	oauth2l fetch --credentials credential.json --scope gmail.readonly | tail -n 1 > $@
 
 electric.pdf: token.txt
 	python attachment.py $(shell cat $<) "from:ebill@mea.or.th newer_than:30d subject:ใบแจ้ง" $@
