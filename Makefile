@@ -5,7 +5,7 @@ electric.pdf: token.txt
 	python attachment.py $(shell cat $<) "from:ebill@mea.or.th newer_than:30d subject:ใบแจ้ง" $@
 
 water.pdf: token.txt
-	python attachment.py $(shell cat $<) "from:no-reply@mwa.co.th newer_than:30d subject:ใบแจ้ง" $@
+	python attachment.py $(shell cat $<) "from:no-reply@mwa.co.th newer_than:35d -receipt" $@
 
 %.png: %.pdf
 	pdftoppm -png -singlefile $< $(basename $@)
